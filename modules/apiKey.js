@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const api_key = process.env.API_KEY;
 const client_id = process.env.CLIENT_ID;
+const pathFolder = '';
 
 const headers = { "Client-Id": client_id, "Api-Key": api_key }
 const api_links = {
@@ -27,6 +28,7 @@ const api_links = {
     }, 
     // # Список товаров
     "ProductList": "https://api-seller.ozon.ru/v3/product/list",
+    "storage": { api_key, client_id, pathFolder}
 }
 
-export { api_key, client_id, headers, api_links };
+export { api_key, client_id, headers, api_links, pathFolder };

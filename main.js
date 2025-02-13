@@ -1,4 +1,4 @@
-import { api_key, client_id, headers, api_links, pathFolder } from './modules/apiKey.js';
+import { api_links, pathFolder } from './modules/apiKey.js';
 import { getProductList } from './modules/api/Api.js';
 
 // Получение файла с акциями

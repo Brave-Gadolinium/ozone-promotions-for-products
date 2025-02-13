@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+*::selection {
+    background-color: rgb(209, 209, 209);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:active, a:link {
+    color: rgb(78, 78, 78);
+}
+
+body {
+    background-color: #afb0c0;
+    display: grid;
+    grid-template-columns:  1fr 10fr;
+}
+
+.navMainSection {
+    margin-top: 10px;
+    margin-left: 40px;
+    padding: 10px;
+}
+
+.windowForItems {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin: 0px 40px 0px 40px;
+    padding: 20px;
+}
+
+.leftAside {
+    position: sticky;
+    top: 1px;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.listAside {
+    margin: 20px;
+}
+
+.buttonMenu {
+    /* width: 10px; */
+}

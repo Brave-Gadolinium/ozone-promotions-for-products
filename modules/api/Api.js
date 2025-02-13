@@ -1,5 +1,6 @@
 // Модули
 import { readJSON } from './jsonReader/jsonReader.js'
+import { getModelsInfo } from './getModelInfo/getModelInfo.js'
 
 
 // Необходимые переменные
@@ -20,6 +21,8 @@ async function getProductList(api_links) {
         if (!api_links || !api_links["ProductList"] || !api_links['storage'] || !api_links['storage']['client_id'] || !api_links['storage']['api_key']) {
             throw new Error('Не предоставлены необходимые параметры для выполнения запроса.');
         }
+
+        const arrayIdModels = []
 
         const requestBody = {
             "filter": {
@@ -43,7 +46,14 @@ async function getProductList(api_links) {
             throw new Error(`Запрос вернул ошибку! Статус запроса: ${response.status}`);
         }
         const data = await response.json();
-        readJSON(data.result);
+
+        data.result.items.forEach((element, i) => {
+            arrayIdModels.push(element['product_id'].toString());
+        });
+
+        const answer = await getModelsInfo(data, api_links, arrayIdModels);
+
+        readJSON(answer);
         if (data.result.items.length < limitCountQuery) {
             console.log('Всё')
         }

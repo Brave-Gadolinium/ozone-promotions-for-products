@@ -28,7 +28,8 @@ const api_links = {
     }, 
     // # Список товаров
     "ProductList": "https://api-seller.ozon.ru/v3/product/list",
-    "storage": { api_key, client_id, pathFolder}
+    "InfoModels": "https://api-seller.ozon.ru/v3/product/info/list",
+    "storage": { api_key, client_id, pathFolder }
 }
 
 export { headers, api_links, pathFolder };

@@ -2,7 +2,9 @@
   "dependencies": {
     "@testing-library/react": "^16.2.0",
     "axios": "^1.7.9",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@babel/core": "^7.26.8",

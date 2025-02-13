@@ -1,6 +1,16 @@
+// Модули
+import { readJSON } from './jsonReader/jsonReader.js'
+
+
+// Необходимые переменные
+const limitCountQuery = 1000;
+let lastid = '';
+
+
 // Контроллер для отмены сетевого запроса (если он занимает много времени)
 const controller = new AbortController();
 const signal = controller.signal;
+
 
 // Получить все товары в Ozon
 async function getProductList(api_links) {
@@ -15,8 +25,8 @@ async function getProductList(api_links) {
             "filter": {
                 "visibility": "ALL",
             },
-            "last_id": "",
-            "limit" : 1,
+            "last_id": lastid,
+            "limit" : limitCountQuery,
         }
         
         const response = await fetch(api_links["ProductList"], {
@@ -33,9 +43,10 @@ async function getProductList(api_links) {
             throw new Error(`Запрос вернул ошибку! Статус запроса: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Полученные данные:', data);
-        console.log('Полученные данные:', data.result.items);
-
+        readJSON(data.result);
+        if (data.result.items.length < limitCountQuery) {
+            console.log('Всё')
+        }
     } catch (error) {
         if (error.name === 'AbortError') {
             console.log('Запрос был отменён');

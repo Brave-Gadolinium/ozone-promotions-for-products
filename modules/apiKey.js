@@ -31,4 +31,4 @@ const api_links = {
     "storage": { api_key, client_id, pathFolder}
 }
 
-export { api_key, client_id, headers, api_links, pathFolder };
+export { headers, api_links, pathFolder };

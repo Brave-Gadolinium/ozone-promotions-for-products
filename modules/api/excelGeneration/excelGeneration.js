@@ -16,7 +16,7 @@ async function readJsonFile(filePath) {
 
 // Функция для извлечения основного артикула
 function getBaseArticle(offerId) {
-    return offerId.split(/[-\s(]/)[0];
+    return offerId.split('(')[0].trim();
 }
 
 // Группировка данных по основному артикулу
@@ -30,6 +30,7 @@ function groupDataByBaseArticle(data) {
             Артикул: item.offer_id,
             Цена: Math.round(item.price),
             Старая_цена: Math.round(item.old_price),
+            Артикул2: baseArticle,
             Динамика_цены: Math.round(item.old_price) - Math.round(item.price),
         });
         return acc;
@@ -38,10 +39,34 @@ function groupDataByBaseArticle(data) {
 
 // Преобразование сгруппированных данных в плоский массив для записи в Excel
 function flattenGroupedData(groupedData) {
-    return Object.entries(groupedData).flatMap(([baseArticle, items]) => [
-        { Артикул: baseArticle, Цена: '', Старая_цена: '', Валюта: '', Динамика_цены: '', Фирма: 'BestShoes' }, 
-        ...items.map(item => ({ ...item, Артикул: item.Артикул }))
-    ]);
+    return Object.entries(groupedData).flatMap(([baseArticle, items]) => {
+        // Добавляем детальные строки сначала
+        const detailedRows = items.map(item => ({
+            Артикул: item.Артикул,
+            Название: item.Название,
+            Цена: item.Цена,
+            Старая_цена: item.Старая_цена,
+            Динамика_цены: item.Динамика_цены,
+            Валюта: item.Валюта,
+            Количество: item.Количество,
+            Статус: item.Статус,
+        }));
+
+        // Добавляем baseArticle в конец группы
+        const baseArticleRow = {
+            Артикул: baseArticle,
+            Название: '',
+            Цена: '',
+            Старая_цена: '',
+            Динамика_цены: '',
+            Валюта: '',
+            Количество: '',
+            Статус: ''
+        };
+
+        // Возвращаем массив, где baseArticle находится в конце
+        return [...detailedRows, baseArticleRow];
+    });
 }
 
 // Создание Excel-файла с помощью exceljs
@@ -64,14 +89,14 @@ async function createExcelFile(data) {
         workbook.properties = { hasMacros: true }; // Указываем, что файл содержит макросы
 
         // Добавление заголовков
-        worksheet.addRow(['Артикул', 'Цена', 'Старая цена', 'Динамика цены', 'BESTSHOES']);
+        worksheet.addRow(['Артикул', 'Цена', 'Старая цена', 'Динамика_цены', 'Артикул', 'BESTSHOES']);
         const headerRow = worksheet.getRow(1);
         headerRow.eachCell(cell => {
             cell.font = { bold: true };
             cell.fill = {
                 type: 'pattern',
                 pattern: 'solid',
-                fgColor: { argb: '67B3FF' }
+                fgColor: { argb: '8FC7FF' }
             };
         });
 
@@ -81,8 +106,9 @@ async function createExcelFile(data) {
                 rowData['Артикул'],
                 rowData['Цена'],
                 rowData['Старая_цена'],
-                rowData['Динамика цены'],
-                rowData['BESTSHOES'],
+                rowData['Динамика_цены'],
+                rowData['Артикул'],
+                ' ',
             ]);
         });
 
@@ -90,7 +116,11 @@ async function createExcelFile(data) {
         worksheet.columns = [
             { width: 15 }, // Артикул
             { width: 15 }, // Цена
-            { width: 15 }, // Старая цена
+            { width: 20 }, // Старая цена
+            { width: 20 }, // Старая цена
+            { width: 20 }, // Старая цена
+            { width: 20 }, // Старая цена
+
         ];
         worksheet.getRow(1).height = 30;
         headerRow.eachCell((cell) => {
@@ -100,6 +130,17 @@ async function createExcelFile(data) {
                 wrapText: true // Если текст длинный, он будет переноситься
             };
         });
+
+        // Установка белого цвета заливки всех строк
+        // worksheet.eachRow({ includeEmpty: true }, (row) => {
+        //     row.eachCell({ includeEmpty: true }, (cell) => {
+        //         cell.fill = {
+        //             type: 'pattern', // Тип заливки
+        //             pattern: 'solid', // Сплошная заливка
+        //             fgColor: { argb: 'FFFFFF' } // Белый цвет (FFFFFF)
+        //         };
+        //     });
+        // });
         
         // Установка денежного формата для второго столбца (индекс 3, так как индексация начинается с 1)
         worksheet.getColumn(3).eachCell({ includeEmpty: true }, (cell) => {
@@ -111,16 +152,25 @@ async function createExcelFile(data) {
         // Группировка строк
         let rowOffset = 1; // Начинаем с первой строки заголовков
         Object.values(groupedData).forEach(items => {
-            const startRow = rowOffset + 1; // Индекс начальной строки группы
-            const endRow = startRow + items.length - 1; // Индекс конечной строки группы
-
-            if (startRow <= endRow) {
-                for (let i = startRow; i <= endRow; i++) {
-                    worksheet.getRow(i).outlineLevel = 1; // Устанавливаем уровень группировки
-                }
+            const baseRow = rowOffset + items.length + 1; // Строка с baseArticle в конце
+            worksheet.getRow(baseRow).outlineLevel = 0; // Основной артикул всегда виден
+            const startRow = rowOffset + 1; // Начало группы
+            const endRow = baseRow - 1; // Конец группы (перед baseArticle)
+            for (let i = startRow; i <= endRow; i++) {
+                worksheet.getRow(i).outlineLevel = 1; // Группируемые строки
             }
 
-            rowOffset += items.length + 1; // Учитываем общую строку артикула
+            const headerRow = worksheet.getRow(baseRow);
+            headerRow.eachCell(cell => {
+                cell.font = { bold: true };
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'B9DCFF' }
+                };
+            });
+
+            rowOffset += items.length + 1; // Сдвиг для следующей группы
         });
 
         // Сохранение файла

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Дополнительные переменные
-const moduleStorageFolderPath = './modules/storage/modelsStorage.json';
+const moduleStorageFolderPath = './modules/storage/modelsStorageBestShoes.json';
 
 async function readJSON(fetchedData) {
 

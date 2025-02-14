@@ -1,8 +1,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
+// const brand = process.env.Brand;
+const brand = 'Armbest';
+const api_key = brand === 'Armbest' ? process.env.API_KEY_Armbest : process.env.API_KEY_BestShoes;
 
-const api_key = process.env.API_KEY;
-const client_id = process.env.CLIENT_ID;
+const client_id = brand == 'Armbest' ? process.env.CLIENT_ID_Armbest : process.env.CLIENT_ID_BestShoes;
 const pathFolder = '';
 
 const headers = { "Client-Id": client_id, "Api-Key": api_key }

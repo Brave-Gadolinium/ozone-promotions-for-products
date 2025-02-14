@@ -119,23 +119,17 @@ async function loadJSON() {
 
         boxInputs.appendChild(document.createElement('br'));
 
-        // 0. Описание 
-        const buttonMoreInfoModel = document.createElement('button');
-        buttonMoreInfoModel.textContent = 'Подробнее про модель';
-        buttonMoreInfoModel.className = 'buttonMoreInfoModel';
-        itemSale.appendChild(buttonMoreInfoModel);
+        // 0. Количество на складе 
+        // const countModelsWarehouse = document.createElement('span');
+        // countModelsWarehouse.textContent = 'На складе: ' + item.model_info.count;
+        // countModelsWarehouse.className = 'countModelsWarehouse';
+        // itemSale.appendChild(countModelsWarehouse);
 
-        // 0. Описание 
-        const countModelsWarehouse = document.createElement('span');
-        countModelsWarehouse.textContent = 'На складе: ' + item.model_info.count;
-        countModelsWarehouse.className = 'countModelsWarehouse';
-        itemSale.appendChild(countModelsWarehouse);
-
-        // 0. Описание 
+        // 0. Скидка
         const salesCount = document.createElement('span');
         const result = (item.old_price - item.price) / 100;
         const roundedResult = Math.round(result / 10) * 10;
-        salesCount.textContent = roundedResult;
+        salesCount.textContent = '-'+roundedResult + '%';
         salesCount.className = 'salesCount';
         itemSale.appendChild(salesCount);
 

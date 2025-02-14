@@ -16,7 +16,6 @@ const signal = controller.signal;
 // Получить все товары в Ozon
 async function getProductList(api_links) {
     try {
-
         // Проверяем, что api_links содержит необходимые данные
         if (!api_links || !api_links["ProductList"] || !api_links['storage'] || !api_links['storage']['client_id'] || !api_links['storage']['api_key']) {
             throw new Error('Не предоставлены необходимые параметры для выполнения запроса.');

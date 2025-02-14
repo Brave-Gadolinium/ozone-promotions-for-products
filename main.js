@@ -5,8 +5,8 @@ import { getSalesActions } from './modules/api/getModelInfo/getSales.js';
 // Получение файла с акциями
 function getSaleFile() {
     console.log('Получение всех товаров с Ozon по API');
-    getProductList(api_links);
-    getSalesActions(api_links);
+    // getProductList(api_links);
+    // getSalesActions(api_links);
 }
 
 getSaleFile()

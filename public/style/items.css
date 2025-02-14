@@ -34,8 +34,8 @@
 
 .priceItem {
     position: relative;
-    left: 85px;
-    top: 53px;
+    left: 55px;
+    top: 45px;
     background-color: rgb(187, 187, 187);
     border-radius: 10px;
     padding: 4px;
@@ -45,8 +45,9 @@
 .oldPriceItem {
     position: relative;
     text-decoration-line: line-through;
-    left: 22px;
-    top: 32px;
+    left: 0px;
+    top: 23px;
+    font-size: 13px;
 }
 
 .buttonMoreInfoModel {
@@ -64,20 +65,20 @@
     font-weight: 700;
 }
 
-.itemSale:hover > .buttonMoreInfoModel {
-    position: relative;
-    z-index: 2;
-    transition: 0.1s;
-    visibility: visible;
-    transform: translateY(50px);
-}
-
-.buttonMoreInfoModel:active {
-    color: rgb(121, 121, 121);
-}
-
 .countModelsWarehouse {
     position: relative;
-    top: 10px;
-    left: 60px;
+    top: -16px;
+    left: 65px;
+}
+
+.salesCount {
+    position: relative;
+    left: -43%;
+    background-color: rgb(175, 175, 175);
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

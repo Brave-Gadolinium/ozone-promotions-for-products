@@ -2,118 +2,118 @@ const mainSection = document.querySelector('main.mainSection');
 
 async function loadJSON() {
     try {
-      const response = await fetch('http://localhost:2024/api/modelsOzon'); // Укажите правильный путь к файлу
+      const response = await fetch('http://localhost:2024/api/modelsOzon');
       if (!response.ok) {
         throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
       }
-      const data = await response.json(); // Парсим JSON
+      const data = await response.json();
       const windowForItems = document.querySelector('.windowForItems');
   
     data.items.forEach(item => {
-        const itemSale = document.createElement('div'); // Создаём div для каждого товара
-        itemSale.className = 'itemSale'; // Устанавливаем класс
+        const itemSale = document.createElement('div');
+        itemSale.className = 'itemSale';
     
         // 1. Product ID (скрытый)
         const productIDCell = document.createElement('span');
         productIDCell.textContent = item.product_id;
-        productIDCell.style.visibility = 'hidden'; // Скрываем ID
-        productIDCell.className = 'product_id'; // Добавляем класс
+        productIDCell.style.visibility = 'hidden';
+        productIDCell.className = 'product_id';
         itemSale.appendChild(productIDCell);
     
         // 2. Offer ID (заголовок)
         const offerIDCell = document.createElement('h3');
         offerIDCell.textContent = item.offer_id;
-        offerIDCell.className = 'offer_id'; // Добавляем класс
+        offerIDCell.className = 'offer_id';
         itemSale.appendChild(offerIDCell);
     
         // 3. Изображение
         const imageItem = document.createElement('img');
         imageItem.src = item.primary_image;
-        imageItem.alt = 'Product Image'; // Добавляем alt для доступности
-        imageItem.className = 'imageItem'; // Добавляем класс
+        imageItem.alt = 'Product Image';
+        imageItem.className = 'imageItem';
         itemSale.appendChild(imageItem);
     
         const boxInputs = document.createElement('div');
         boxInputs.className = 'boxInputs'
-        boxInputs.style.display = 'none'; // Скрываем ID
+        boxInputs.style.display = 'none';
 
         itemSale.appendChild(boxInputs);
 
         // 0. Описание 
         const descriptionItem = document.createElement('span');
         descriptionItem.textContent = item.name;
-        descriptionItem.className = 'descriptionItem'; // Добавляем класс
-        descriptionItem.title = item.name; // Добавляем класс
+        descriptionItem.className = 'descriptionItem';
+        descriptionItem.title = item.name;
         itemSale.appendChild(descriptionItem);
         
         // 0. Описание 
         const priceItem = document.createElement('span');
         priceItem.textContent = item.price;
-        priceItem.className = 'priceItem'; // Добавляем класс
+        priceItem.className = 'priceItem';
         itemSale.appendChild(priceItem);
 
         // 0. Описание 
         const oldPriceItem = document.createElement('span');
         oldPriceItem.textContent = item.old_price;
-        oldPriceItem.className = 'oldPriceItem'; // Добавляем класс
+        oldPriceItem.className = 'oldPriceItem';
         itemSale.appendChild(oldPriceItem);
         
         // 4. Уценка (checkbox)
         const discountedLabel = document.createElement('label');
-        discountedLabel.htmlFor = 'is_discounted'; // Связываем label с input
+        discountedLabel.htmlFor = 'is_discounted'
         discountedLabel.textContent = 'Уценка: ';
         boxInputs.appendChild(discountedLabel);
 
         const discountedCell = document.createElement('input');
         discountedCell.type = 'checkbox';
         discountedCell.name = 'is_discounted';
-        discountedCell.className = 'is_discounted'; // Добавляем класс
-        discountedCell.checked = item.is_discounted; // Устанавливаем состояние checkbox
+        discountedCell.className = 'is_discounted';
+        discountedCell.checked = item.is_discounted;
         boxInputs.appendChild(discountedCell);
     
         boxInputs.appendChild(document.createElement('br'));
 
         // 5. Архив (checkbox)
         const archivedLabel = document.createElement('label');
-        archivedLabel.htmlFor = 'archived'; // Связываем label с input
+        archivedLabel.htmlFor = 'archived';
         archivedLabel.textContent = 'В архиве: ';
         boxInputs.appendChild(archivedLabel);
     
         const archivedCell = document.createElement('input');
         archivedCell.type = 'checkbox';
         archivedCell.name = 'archived';
-        archivedCell.className = 'archived'; // Добавляем класс
-        archivedCell.checked = item.archived; // Устанавливаем состояние checkbox
+        archivedCell.className = 'archived';
+        archivedCell.checked = item.archived;
         boxInputs.appendChild(archivedCell);
        
         boxInputs.appendChild(document.createElement('br'));
 
         // 6. ФБС (checkbox)
         const fbsLabel = document.createElement('label');
-        fbsLabel.htmlFor = 'has_fbs_stocks'; // Связываем label с input
+        fbsLabel.htmlFor = 'has_fbs_stocks';
         fbsLabel.textContent = 'ФБС: ';
         boxInputs.appendChild(fbsLabel);
     
         const fbsStocksCell = document.createElement('input');
         fbsStocksCell.type = 'checkbox';
         fbsStocksCell.name = 'has_fbs_stocks';
-        fbsStocksCell.className = 'has_fbs_stocks'; // Добавляем класс
-        fbsStocksCell.checked = item.has_fbs_stocks; // Устанавливаем состояние checkbox
+        fbsStocksCell.className = 'has_fbs_stocks';
+        fbsStocksCell.checked = item.has_fbs_stocks;
         boxInputs.appendChild(fbsStocksCell);
 
         boxInputs.appendChild(document.createElement('br'));
 
         // 7. ФБО (checkbox)
         const fboLabel = document.createElement('label');
-        fboLabel.htmlFor = 'has_fbo_stocks'; // Связываем label с input
+        fboLabel.htmlFor = 'has_fbo_stocks';
         fboLabel.textContent = 'ФБО: ';
         boxInputs.appendChild(fboLabel);
         
         const fboStocksCell = document.createElement('input');
         fboStocksCell.type = 'checkbox';
         fboStocksCell.name = 'has_fbo_stocks';
-        fboStocksCell.className = 'has_fbo_stocks'; // Добавляем класс
-        fboStocksCell.checked = item.has_fbo_stocks; // Устанавливаем состояние checkbox
+        fboStocksCell.className = 'has_fbo_stocks';
+        fboStocksCell.checked = item.has_fbo_stocks;
         fboStocksCell.onclick = "false"
         boxInputs.appendChild(fboStocksCell);
 
@@ -122,14 +122,22 @@ async function loadJSON() {
         // 0. Описание 
         const buttonMoreInfoModel = document.createElement('button');
         buttonMoreInfoModel.textContent = 'Подробнее про модель';
-        buttonMoreInfoModel.className = 'buttonMoreInfoModel'; // Добавляем класс
+        buttonMoreInfoModel.className = 'buttonMoreInfoModel';
         itemSale.appendChild(buttonMoreInfoModel);
 
         // 0. Описание 
         const countModelsWarehouse = document.createElement('span');
         countModelsWarehouse.textContent = 'На складе: ' + item.model_info.count;
-        countModelsWarehouse.className = 'countModelsWarehouse'; // Добавляем класс
+        countModelsWarehouse.className = 'countModelsWarehouse';
         itemSale.appendChild(countModelsWarehouse);
+
+        // 0. Описание 
+        const salesCount = document.createElement('span');
+        const result = (item.old_price - item.price) / 100;
+        const roundedResult = Math.round(result / 10) * 10;
+        salesCount.textContent = roundedResult;
+        salesCount.className = 'salesCount';
+        itemSale.appendChild(salesCount);
 
         // 8. Quants (пустой span)
         // const quantsCell = document.createElement('span');

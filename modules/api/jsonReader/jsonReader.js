@@ -42,7 +42,7 @@ async function readJSON(fetchedData) {
         } else {
             console.warn('В полученных данных отсутствует поле items. Ничего не добавлено.');
         }
-        
+
         // Записываем обновленные данные обратно в файл
         const jsonData = JSON.stringify(existingData, null, 2);
         await fs.promises.writeFile(moduleStorageFolderPath, jsonData, 'utf8');

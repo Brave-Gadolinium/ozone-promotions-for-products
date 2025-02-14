@@ -52,8 +52,8 @@ async function getProductList(api_links) {
         });
 
         const answer = await getModelsInfo(data, api_links, arrayIdModels);
-
         readJSON(answer);
+
         if (data.result.items.length < limitCountQuery) {
             console.log('Всё')
         }

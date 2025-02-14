@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
+
 const api_key = process.env.API_KEY;
 const client_id = process.env.CLIENT_ID;
 const pathFolder = '';
